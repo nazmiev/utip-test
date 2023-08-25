@@ -1,12 +1,10 @@
-const url = "https://swapi.dev/api/people/";
 const container = document.getElementById('container');
-const getButton = container.querySelector('button');
-const table = container.querySelector('table');
+const tbody = container.querySelector('tbody');
 
 async function getData() {
     container.classList.add('loading')
     try {
-        const response = await fetch(url, {
+        const response = await fetch('https://swapi.dev/api/people/', {
             method: "GET",
         });
         const json = await response.json();
@@ -18,7 +16,7 @@ async function getData() {
                 spec.innerText = attributes[property];
                 row.appendChild(spec);
               }
-            table.appendChild(row);
+            tbody.appendChild(row);
         })
         container.classList.remove('loading')
         container.classList.add('loaded')
@@ -29,10 +27,7 @@ async function getData() {
 
 function clearData () {
     container.classList.remove('loaded');
-    while (table.lastChild) {
-        if (table.lastChild.nodeName != 'TR') { return }
-        table.removeChild(table.lastChild);
-    }
+    tbody.innerHTML = '';
 }
 
 class personAttibutes {
